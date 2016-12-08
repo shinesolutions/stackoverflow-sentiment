@@ -41,8 +41,6 @@ def main(credential_file):
         SchemaField('magnitude', 'FLOAT', mode='required')
     ]
     table = dataset.table('comment_sentiments', SCHEMA)
-    if table.exists:
-        table.delete() #truncate
     table.create()
 
     # Run each comment through the natural language API to get the sentiment of the comment
