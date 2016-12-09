@@ -30,8 +30,8 @@ def main(credential_file):
     writer = csv.writer(csv_file)
     writer.writerow(('id', 'score', 'magnitude'))
 
-    # Create the dataset (once) + table (always)
-    # ------------------------------------------
+    # Create the dataset & table
+    # --------------------------
     dataset = bigquery_service.dataset('sentiment_user_237838')
     if not dataset.exists:
         dataset.create()
@@ -41,12 +41,17 @@ def main(credential_file):
         SchemaField('magnitude', 'FLOAT', mode='required')
     ]
     table = dataset.table('comment_sentiments', SCHEMA)
+    if table.exists:
+        table.delete #truncate
     table.create()
 
     # Run each comment through the natural language API to get the sentiment of the comment
     # --------------------------------------------------------------------------------------
+    records_processed = 0
     for row in query.rows:
         comment_id, comment = row[0], row[1]
+        records_processed += 1
+        print('Processing record %d with comment: "%s"' % (records_processed, comment) )
         service_request = language_service.documents().analyzeSentiment(
                 body={
                     'document': {
@@ -55,10 +60,13 @@ def main(credential_file):
                     }
                 }
         )
-        response = service_request.execute()
-        score = response['documentSentiment']['score']
-        magnitude = response['documentSentiment']['magnitude']
-        writer.writerow((comment_id, score, magnitude))
+        try:
+            response = service_request.execute()
+            score = response['documentSentiment']['score']
+            magnitude = response['documentSentiment']['magnitude']
+            writer.writerow((comment_id, score, magnitude))
+        except Exception as e:
+            print(e)
 
     # Upload the sentiment file to BigQuery as a table
     # -------------------------------------------------
