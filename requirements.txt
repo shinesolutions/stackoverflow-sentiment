@@ -1,2 +1,2 @@
-google-api-python-client
+google-cloud-natural-language
 google-cloud-bigquery

@@ -7,6 +7,10 @@ This simple project uses Google BigQuery &amp; Google Cloud Natural Language API
 https://cloud.google.com/natural-language/
 https://cloud.google.com/bigquery/
 
+###Google APIs
+https://github.com/GoogleCloudPlatform/google-cloud-python/tree/master/bigquery
+https://github.com/GoogleCloudPlatform/google-cloud-python/tree/master/language
+
 ###Motivation
 https://hackernoon.com/the-decline-of-stack-overflow-7cb69faa575d#.lybav9o7b
 http://stackexchange.com/users/85265/andrew-barber?tab=activity
