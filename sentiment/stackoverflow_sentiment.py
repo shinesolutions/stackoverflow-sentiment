@@ -17,7 +17,8 @@ def main(credential_file):
 
     # Fetch users comments from BigQuery public dataset
     # --------------------------------------------------
-    QUERY = 'SELECT id,text FROM `bigquery-public-data.stackoverflow.comments` WHERE user_id = 237838'
+    QUERY = '''SELECT id,text FROM `stackoverflow-sentiment.sentiment_user_237838.all_comments`
+                WHERE post_id IN (SELECT CAST(id AS INT64) FROM `bigquery-public-data.stackoverflow.posts_answers` WHERE owner_user_id != '237838')'''
     query = bigquery_service.run_sync_query(QUERY)
     query.timeout_ms = 60000
     query.use_legacy_sql = False
@@ -42,7 +43,7 @@ def main(credential_file):
     ]
     table = dataset.table('comment_sentiments', SCHEMA)
     if table.exists:
-        table.delete #truncate
+        table.delete  # truncate
     table.create()
 
     # Run each comment through the natural language API to get the sentiment of the comment
@@ -51,7 +52,7 @@ def main(credential_file):
     for row in query.rows:
         comment_id, comment = row[0], row[1]
         records_processed += 1
-        print('Processing record %d with comment: "%s"' % (records_processed, comment) )
+        print('Processing record %d with comment: "%s"' % (records_processed, comment))
         service_request = language_service.documents().analyzeSentiment(
                 body={
                     'document': {
