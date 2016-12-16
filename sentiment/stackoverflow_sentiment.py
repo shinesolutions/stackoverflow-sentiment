@@ -6,7 +6,7 @@ from google.cloud import bigquery
 from google.cloud import language
 from google.cloud.bigquery import SchemaField
 
-def main(credential_file):
+def main(credential_file, dataset):
     # Auth stuff setup
     # -----------------
 
@@ -17,12 +17,7 @@ def main(credential_file):
     # Fetch users comments from BigQuery public dataset
     # -------------------------------------------------
 
-    QUERY = '''
-                SELECT id,text FROM `stackoverflow-sentiment.sentiment_user_237838.all_comments`
-                  WHERE post_id IN (
-                SELECT CAST(id AS INT64) FROM `bigquery-public-data.stackoverflow.posts_answers`
-                  WHERE owner_user_id != '237838')
-            '''
+    QUERY = 'SELECT id, text FROM `stackoverflow-sentiment.sentiment.comments_on_all_answers_for_JS_java_python` ORDER BY score DESC LIMIT 1000'
     query = bigquery_service.run_sync_query(QUERY)
     query.timeout_ms = 60000
     query.use_legacy_sql = False
@@ -39,7 +34,7 @@ def main(credential_file):
     # Create the dataset & table
     # --------------------------
 
-    dataset = bigquery_service.dataset('sentiment_user_237838')
+    dataset = bigquery_service.dataset(dataset)
     if not dataset.exists:
         dataset.create()
     SCHEMA = [
@@ -79,5 +74,6 @@ def main(credential_file):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('credential_file', help='Path to your service account key (JSON file)')
+    parser.add_argument('dataset', help='The dataset where the sentiment results should be uploaded to as a BQ table')
     args = parser.parse_args()
-    main(args.credential_file)
+    main(credential_file=args.credential_file, dataset=args.dataset)
