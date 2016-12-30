@@ -32,8 +32,23 @@ https://bigquery.cloud.google.com/dataset/stackoverflow-sentiment:sentiment
 
 ###Queries
 
-####comments_on_accepted_answers with either JavaScript, Java or Python tags
-https://bigquery.cloud.google.com:443/savedquery/1056242102418:bc02f8082e1148a5bde33da5a247ea88
+####Best day to post a question on Stack Overflow
+https://bigquery.cloud.google.com:443/savedquery/1056242102418:63c31fe61a7c4d53ae3ef22f30203881
 
-####comments_on_all_answers with either JavaScript, Java or Python tags
-https://bigquery.cloud.google.com:443/savedquery/1056242102418:575f631a65b7448baf54c340477f1e97
+####Correctly spelled BigQuery - it's one word! :-)
+https://bigquery.cloud.google.com:443/savedquery/1056242102418:b4117babd35c41e78aa0ab8c69f42257
+
+####Overall % sentiment
+https://bigquery.cloud.google.com:443/savedquery/1056242102418:864b7503d0d3407bb97b08350fbdc311
+
+####Overall sentiment counts
+https://bigquery.cloud.google.com:443/savedquery/1056242102418:9a7847826552407aa690db60a1276feb
+
+####Average sentiment
+https://bigquery.cloud.google.com:443/savedquery/1056242102418:7b4dccb9c54b45ed86c4876df5e4794a
+
+####Comments on questions asked by noobs for 2016 and for JavaScript, Java and Python tags
+https://bigquery.cloud.google.com:443/savedquery/1056242102418:1c6c51620ee24e878cb361e0e236426b
+
+####Counts of negative comments
+https://bigquery.cloud.google.com:443/savedquery/1056242102418:57b1910592874c3fa4db79a103797cd9
