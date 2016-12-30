@@ -17,7 +17,7 @@ def main(credential_file, dataset):
     # Fetch users comments from BigQuery public dataset
     # -------------------------------------------------
 
-    QUERY = 'SELECT id, text FROM `stackoverflow-sentiment.sentiment.comments_on_all_answers_for_JS_java_python` ORDER BY score DESC LIMIT 1000'
+    QUERY = 'SELECT * FROM `stackoverflow-sentiment.sentiment.v_comments_on_questions_from_noobs`'
     query = bigquery_service.run_sync_query(QUERY)
     query.timeout_ms = 60000
     query.use_legacy_sql = False
