@@ -1,6 +1,10 @@
 # Stack Overflow Sentiment
 This simple project uses Google BigQuery &amp; Google Cloud Natural Language API to analyse Stack Overflow comment sentiment. Developed using Python 2.7.x (but should work with Python 3.x though too). The queries and datasets used are all public. You can find the links below.
 
+To run:
+
+`python sentiment/stackoverflow_sentiment.py <path_to_service_account_json_file> <dataset>`
+
 ##Links
 
 ###Blog post
